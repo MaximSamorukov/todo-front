@@ -1,3 +1,5 @@
-export default () => {
-  BASE_URL: 'https://apptodoback.herokuapp.com/',
+export function CONSTANTS () {
+  return ( {
+    BASE_URL: 'https://apptodoback.herokuapp.com/',
+  } );
 };
