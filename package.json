@@ -1,0 +1,19 @@
+{
+  "name": "todo-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaximSamorukov/todo-front.git"
+  },
+  "author": "Maxim Samorukov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaximSamorukov/todo-front/issues"
+  },
+  "homepage": "https://github.com/MaximSamorukov/todo-front#readme"
+}
