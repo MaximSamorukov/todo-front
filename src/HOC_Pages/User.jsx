@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Tag, Space } from 'antd';
 import { getUsers } from '../data/http';
-import data from '../data/mockUsers.json';
-export const Users = () => {
+import data from '../data/mockUser.json';
+export const User = () => {
   // const [users, getUsersFromDb] = useState( [] );
   // getUsers().then( ( info ) => {
   //   getUsersFromDb( info );
@@ -13,24 +13,14 @@ export const Users = () => {
 
   const columns = [
     {
-      title: 'id',
-      dataIndex: 'id',
-      key: 'id',
+      title: 'Properties',
+      dataIndex: 'property',
+      key: 'property',
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Login',
-      dataIndex: 'login',
-      key: 'login',
-    },
-    {
-      title: 'Password',
-      key: 'password',
-      dataIndex: 'password',
+      title: 'Values',
+      dataIndex: 'value',
+      key: 'value',
     },
   ];
   return <Table columns={columns} dataSource={data} />

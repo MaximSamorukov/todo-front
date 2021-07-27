@@ -2,38 +2,70 @@ import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import { Layout, Menu, Avatar, Space, Row, Col } from 'antd';
 import { Users } from './Users.jsx';
+import { Goals } from './Goals.jsx';
+import { User } from './User.jsx';
 import { v4 as uuidv4 } from 'uuid';
 import { UserOutlined } from '@ant-design/icons';
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import '../styles/style.css';
 
 const { Header, Content, Footer } = Layout;
 export const Navigation = () => {
-  console.log('top');
+  const [current, setCurrent] = useState('goals');
+  const handleClick = (e) => {
+    console.log('click ', e);
+    setCurrent(e.key);
+  };
   return (
-    <Layout className="layout">
-      <Header>
-        <div className="logo" />
-        <Row>
-          <Col span={22}>
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-              <Menu.Item key={uuidv4()}>Цели</Menu.Item>
-              <Menu.Item key={uuidv4()}>Пользователи</Menu.Item>
-            </Menu>
-          </Col>
-          <Col span={2}>>
-            <Avatar size={40} icon={<UserOutlined />} />
-          </Col>
+    <Router>
+      <Layout className="layout">
+        <Header>
+          <div className="logo" />
+          <Row>
+            <Col span={22}>
+              <Menu
+                theme="dark"
+                mode="horizontal"
+                defaultSelectedKeys={['goals']}
+                onClick={handleClick}
+                selectedKeys={[current]}
+              >
+                <Menu.Item key="goals"><Link key="goals" to="/goals">Цели</Link></Menu.Item>
+                <Menu.Item key="users"><Link key="users" to="/users">Пользователи</Link></Menu.Item>
+              </Menu>
+            </Col>
+            <Col span={2}>>
+              <Link onClick={handleClick} key="user" to="/user"><Avatar size={40} icon={<UserOutlined />} /></Link>
+            </Col>
+          </Row>
 
-        </Row>
-      </Header>
-      <Content style={{ "margin-top": '20px', padding: '0 50px' }}>
-        <div className="site-layout-content">
-          <Users />
-        </div>
-      </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
-    </Layout>
+        </Header>
+        <Content style={{ "margin-top": '20px', padding: '0 50px' }}>
+          <div className="site-layout-content">
+            <Switch>
+              <Route path="/goals">
+                <Goals />
+              </Route>
+              <Route path="/users">
+                <Users />
+              </Route>
+              <Route path="/user">
+                <User />
+              </Route>
+              <Route path="/">
+                <Users />
+              </Route>
+            </Switch>
+          </div>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+      </Layout>
+    </Router>
   )
 
 }
