@@ -22,50 +22,48 @@ export const Navigation = () => {
     setCurrent(e.key);
   };
   return (
-    <Router>
-      <Layout className="layout">
-        <Header>
-          <div className="logo" />
-          <Row>
-            <Col span={22}>
-              <Menu
-                theme="dark"
-                mode="horizontal"
-                defaultSelectedKeys={['goals']}
-                onClick={handleClick}
-                selectedKeys={[current]}
-              >
-                <Menu.Item key="goals"><Link key="goals" to="/goals">Цели</Link></Menu.Item>
-                <Menu.Item key="users"><Link key="users" to="/users">Пользователи</Link></Menu.Item>
-              </Menu>
-            </Col>
-            <Col span={2}>>
-              <Link onClick={handleClick} key="user" to="/user"><Avatar size={40} icon={<UserOutlined />} /></Link>
-            </Col>
-          </Row>
+    <Layout className="layout">
+      <Header>
+        <div className="logo" />
+        <Row>
+          <Col span={22}>
+            <Menu
+              theme="dark"
+              mode="horizontal"
+              defaultSelectedKeys={['goals']}
+              onClick={handleClick}
+              selectedKeys={[current]}
+            >
+              <Menu.Item key="goals"><Link key="goals" to="/goals">Цели</Link></Menu.Item>
+              <Menu.Item key="users"><Link key="users" to="/users">Пользователи</Link></Menu.Item>
+            </Menu>
+          </Col>
+          <Col span={2}>>
+            <Link onClick={handleClick} key="user" to="/user"><Avatar size={40} icon={<UserOutlined />} /></Link>
+          </Col>
+        </Row>
 
-        </Header>
-        <Content style={{ "margin-top": '20px', padding: '0 50px' }}>
-          <div className="site-layout-content">
-            <Switch>
-              <Route path="/goals">
-                <Goals />
-              </Route>
-              <Route path="/users">
-                <Users />
-              </Route>
-              <Route path="/user">
-                <User />
-              </Route>
-              <Route path="/">
-                <Users />
-              </Route>
-            </Switch>
-          </div>
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
-      </Layout>
-    </Router>
+      </Header>
+      <Content style={{ "margin-top": '20px', padding: '0 50px' }}>
+        <div className="site-layout-content">
+          <Switch>
+            <Route path="/goals">
+              <Goals />
+            </Route>
+            <Route path="/users">
+              <Users />
+            </Route>
+            <Route path="/user">
+              <User />
+            </Route>
+            <Route path="/">
+              <Users />
+            </Route>
+          </Switch>
+        </div>
+      </Content>
+      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+    </Layout>
   )
 
 }

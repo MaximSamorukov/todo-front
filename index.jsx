@@ -1,4 +1,10 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import { render } from 'react-dom';
 import { Navigation } from './src/HOC_Pages/Navigation.jsx';
 import './src/styles/style.css';
@@ -10,7 +16,11 @@ const App = () => (
   <Navigation />
 )
 
-render(<App />, document.querySelector('#root'));
+render(
+  <Router>
+    <App />
+  </Router>
+  , document.querySelector('#root'));
 
 
 
