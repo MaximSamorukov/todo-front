@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
 } from "react-router-dom";
 import { render } from 'react-dom';
 import { Navigation } from './src/HOC_Pages/Navigation.jsx';
@@ -13,14 +13,15 @@ import 'antd/dist/antd.css';
 
 
 const App = () => (
-  <Navigation />
+  <Router>
+    <Navigation />
+  </Router>
 )
 
 render(
-  <Router>
-    <App />
-  </Router>
-  , document.querySelector('#root'));
+  <App />
+  , document.querySelector('#root')
+);
 
 
 

@@ -16,7 +16,7 @@ import '../styles/style.css';
 
 const { Header, Content, Footer } = Layout;
 export const Navigation = () => {
-  const [current, setCurrent] = useState('goals');
+  const [current, setCurrent] = useState('users');
   const handleClick = (e) => {
     console.log('click ', e);
     setCurrent(e.key);
@@ -30,15 +30,15 @@ export const Navigation = () => {
             <Menu
               theme="dark"
               mode="horizontal"
-              defaultSelectedKeys={['goals']}
+              defaultSelectedKeys={'users'}
               onClick={handleClick}
-              selectedKeys={[current]}
+              selectedKeys={current}
             >
-              <Menu.Item key="goals"><Link key="goals" to="/goals">Цели</Link></Menu.Item>
               <Menu.Item key="users"><Link key="users" to="/users">Пользователи</Link></Menu.Item>
+              <Menu.Item key="goals"><Link key="goals" to="/goals">Цели</Link></Menu.Item>
             </Menu>
           </Col>
-          <Col span={2}>>
+          <Col span={2}>
             <Link onClick={handleClick} key="user" to="/user"><Avatar size={40} icon={<UserOutlined />} /></Link>
           </Col>
         </Row>
