@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1234",
+    "title": "Goal title",
+    "description": "Goal Description",
+    "fromDateTime": "01-01-2020",
+    "toDateTime": "01-01-2022",
+    "actions": "true",
+    "achieved": "falsed"
+  },
+  {
+    "id": "1234",
+    "title": "Goal title",
+    "description": "Goal Description",
+    "fromDateTime": "01-01-2020",
+    "toDateTime": "01-01-2022",
+    "actions": "true",
+    "achieved": "falsed"
+  },
+  {
+    "id": "1234",
+    "title": "Goal title",
+    "description": "Goal Description",
+    "fromDateTime": "01-01-2020",
+    "toDateTime": "01-01-2022",
+    "actions": "true",
+    "achieved": "falsed"
+  },
+  {
+    "id": "1234",
+    "title": "Goal title",
+    "description": "Goal Description",
+    "fromDateTime": "01-01-2020",
+    "toDateTime": "01-01-2022",
+    "actions": "true",
+    "achieved": "falsed"
+  },
+  {
+    "id": "1234",
+    "title": "Goal title",
+    "description": "Goal Description",
+    "fromDateTime": "01-01-2020",
+    "toDateTime": "01-01-2022",
+    "actions": "true",
+    "achieved": "falsed"
+  }
+]
