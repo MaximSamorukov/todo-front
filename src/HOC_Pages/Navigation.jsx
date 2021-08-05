@@ -10,16 +10,25 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  NavLink,
+  Redirect,
+  useLocation,
 } from "react-router-dom";
 import '../styles/style.css';
 
 const { Header, Content, Footer } = Layout;
 export const Navigation = () => {
-  const [current, setCurrent] = useState('users');
-  const handleClick = (e) => {
-    console.log('click ', e);
-    setCurrent(e.key);
+
+  const [current, setCurrent] = useState( 'users' );
+  const currentpath = location?.pathname.split( '/' )[1];
+  useEffect( () => {
+    console.log( currentpath );
+    setCurrent( currentpath );
+  }, [currentpath] )
+  const location = useLocation();
+  const handleClick = ( e ) => {
+    console.log( 'click ', e );
+    setCurrent( e.key );
   };
   return (
     <Layout className="layout">
@@ -30,16 +39,15 @@ export const Navigation = () => {
             <Menu
               theme="dark"
               mode="horizontal"
-              defaultSelectedKeys={'users'}
               onClick={handleClick}
               selectedKeys={current}
             >
-              <Menu.Item key="users"><Link key="users" to="/users">Пользователи</Link></Menu.Item>
-              <Menu.Item key="goals"><Link key="goals" to="/goals">Цели</Link></Menu.Item>
+              <Menu.Item key="users"><NavLink key="users" to="/users">Пользователи</NavLink></Menu.Item>
+              <Menu.Item key="goals"><NavLink key="goals" to="/goals">Цели</NavLink></Menu.Item>
             </Menu>
           </Col>
           <Col span={2}>
-            <Link onClick={handleClick} key="user" to="/user"><Avatar size={40} icon={<UserOutlined />} /></Link>
+            <NavLink onClick={handleClick} key="user" to="/user"><Avatar size={40} icon={<UserOutlined />} /></NavLink>
           </Col>
         </Row>
 
@@ -47,18 +55,10 @@ export const Navigation = () => {
       <Content style={{ "margin-top": '20px', padding: '0 50px' }}>
         <div className="site-layout-content">
           <Switch>
-            <Route path="/goals">
-              <Goals />
-            </Route>
-            <Route path="/users">
-              <Users />
-            </Route>
-            <Route path="/user">
-              <User />
-            </Route>
-            <Route path="/">
-              <Users />
-            </Route>
+            <Route exact path="/goals" component={Goals} />
+            <Route exact path="/users" component={Users} />
+            <Route exact path="/user" component={User} />
+            <Route path="/" render={() => <Redirect to="/users" />} />
           </Switch>
         </div>
       </Content>
