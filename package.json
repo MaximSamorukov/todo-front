@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/MaximSamorukov/todo-front#readme",
   "dependencies": {
+    "@ant-design/icons": "^4.6.2",
     "@babel/polyfill": "^7.12.1",
     "antd": "^4.16.8",
     "axios": "^0.21.1",

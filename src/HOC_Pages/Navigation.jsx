@@ -6,6 +6,7 @@ import { Goals } from './Goals.jsx';
 import { User } from './User.jsx';
 import { v4 as uuidv4 } from 'uuid';
 import { UserOutlined } from '@ant-design/icons';
+import { CONSTANTS } from '../data/constants';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,22 +14,17 @@ import {
   NavLink,
   Redirect,
   useLocation,
+  useHistory,
 } from "react-router-dom";
 import '../styles/style.css';
 
 const { Header, Content, Footer } = Layout;
 export const Navigation = () => {
-
-  const [current, setCurrent] = useState( 'users' );
-  const currentpath = location?.pathname.split( '/' )[1];
-  useEffect( () => {
-    console.log( currentpath );
-    setCurrent( currentpath );
-  }, [currentpath] )
+  const history = useHistory();
   const location = useLocation();
+  console.log( location );
   const handleClick = ( e ) => {
-    console.log( 'click ', e );
-    setCurrent( e.key );
+    history.push( e.key );
   };
   return (
     <Layout className="layout">
@@ -40,24 +36,24 @@ export const Navigation = () => {
               theme="dark"
               mode="horizontal"
               onClick={handleClick}
-              selectedKeys={current}
+              selectedKeys={location?.pathname.split( '/' )[1]}
             >
-              <Menu.Item key="users"><NavLink key="users" to="/users">Пользователи</NavLink></Menu.Item>
-              <Menu.Item key="goals"><NavLink key="goals" to="/goals">Цели</NavLink></Menu.Item>
+              <Menu.Item key="users">Пользователи</Menu.Item>
+              <Menu.Item key="goals">Цели</Menu.Item>
             </Menu>
           </Col>
           <Col span={2}>
-            <NavLink onClick={handleClick} key="user" to="/user"><Avatar size={40} icon={<UserOutlined />} /></NavLink>
+            <NavLink onClick={handleClick} key="user" to={`/user`}><Avatar size={40} icon={<UserOutlined />} /></NavLink>
           </Col>
         </Row>
 
       </Header>
-      <Content style={{ "margin-top": '20px', padding: '0 50px' }}>
+      <Content style={{ "marginTop": '20px', padding: '0 50px' }}>
         <div className="site-layout-content">
           <Switch>
-            <Route exact path="/goals" component={Goals} />
-            <Route exact path="/users" component={Users} />
-            <Route exact path="/user" component={User} />
+            <Route path="/goals" component={Goals} />
+            <Route path="/users" component={Users} />
+            <Route path="/user" component={User} />
             <Route path="/" render={() => <Redirect to="/users" />} />
           </Switch>
         </div>
