@@ -11,14 +11,17 @@ export const getUsers = async () => {
   }
 };
 
-export const addUser = async () => {
+export const addUser = async ( user ) => {
+  const { name, surname, lastname, login, password, role, birthday } = user;
   try {
     const users = await axios.post( `${BASE_URL}users/add`, {
-      name: 'Name',
-      surname: 'Surname',
-      lastname: 'LastName',
-      login: `login${Math.random() * 100}`,
-      password: 'password',
+      name,
+      surname,
+      lastname,
+      login,
+      password,
+      role,
+      birthday: birthday.toString(),
     } );
     return users.data;
   } catch ( err ) {

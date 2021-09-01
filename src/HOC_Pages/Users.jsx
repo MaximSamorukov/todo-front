@@ -3,13 +3,24 @@ import { Table, Tag, Space } from 'antd';
 import { getUsers, addUser, deleteUser } from '../data/http';
 import { EditTwoTone, CloseCircleOutlined } from '@ant-design/icons';
 import { CustomButton } from '../components/UI_components/button.jsx';
+import { AddUser } from '../components/forms/addUser.jsx';
+import moment from 'moment';
 
 export const Users = () => {
   const [loaded, setLoaded] = useState( false );
   const [users, getUsersFromDb] = useState( [] );
+  const [addUserVisible, setAddUserVisible] = useState( false );
 
-  const addNewUser = async () => {
-    const answer = await addUser();
+  const addUserFormOnOk = () => {
+    setAddUserVisible( false );
+  }
+
+  const addUserFormOnCancel = () => {
+    setAddUserVisible( false );
+  }
+
+  const addNewUser = async ( user ) => {
+    const answer = await addUser( user );
     setLoaded( false );
   };
 
@@ -37,10 +48,10 @@ export const Users = () => {
     }
   } );
   const prepaireData = ( data ) => {
-    console.log( data );
-    const prepairedData = data.map( ( item ) => ( {
+    const prepairedData = data && data.map( ( item ) => ( {
       fullname: `${item.name} ${item.surname} ${item.lastname}`,
       ...item,
+      birthday: moment( item.birthday ).format( "DD.MM.YYYY" ),
     } ) )
     return prepairedData;
   }
@@ -54,6 +65,16 @@ export const Users = () => {
       title: 'Fullname',
       dataIndex: 'fullname',
       key: 'fullname',
+    },
+    {
+      title: 'Birthday',
+      dataIndex: 'birthday',
+      key: 'birthday',
+    },
+    {
+      title: 'Role',
+      dataIndex: 'role',
+      key: 'role',
     },
     {
       title: 'Login',
@@ -90,9 +111,10 @@ export const Users = () => {
   return (
     <>
       <div style={{ marginBottom: '10px' }}>
-        <CustomButton title="Добавить" onClick={() => addNewUser()} />
+        <CustomButton title="Добавить" onClick={() => setAddUserVisible( true )} />
       </div>
       <Table columns={columns} dataSource={prepaireData( users )} onRow={onRow} />
+      <AddUser handleOk={addUserFormOnOk} handleCancel={addUserFormOnCancel} isModalVisible={addUserVisible} addNewUser={addNewUser} />
     </>
   )
 }
