@@ -27,7 +27,7 @@ export const addUser = async ( user ) => {
   } catch ( err ) {
     console.log( err );
   }
-}
+};
 
 export const deleteUser = async ( login ) => {
   try {
@@ -38,7 +38,25 @@ export const deleteUser = async ( login ) => {
   } catch ( err ) {
     console.log( err );
   }
-}
+};
+
+export const editUserFunction = async ( user ) => {
+  const { name, surname, lastname, login, password, role, birthday } = user;
+  try {
+    const users = await axios.post( `${BASE_URL}users/edit`, {
+      name,
+      surname,
+      lastname,
+      login,
+      password,
+      role,
+      birthday: birthday.toString(),
+    } );
+    return users.data;
+  } catch ( err ) {
+    console.log( err );
+  }
+};
 
 export const getGoals = async () => {
   try {

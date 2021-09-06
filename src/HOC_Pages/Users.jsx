@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Tag, Space } from 'antd';
-import { getUsers, addUser, deleteUser } from '../data/http';
+import { getUsers, addUser, deleteUser, editUserFunction } from '../data/http';
 import { EditTwoTone, CloseCircleOutlined } from '@ant-design/icons';
 import { CustomButton } from '../components/UI_components/button.jsx';
 import { AddUser } from '../components/forms/addUser.jsx';
+import { EditUser } from '../components/forms/editUser.jsx';
+
 import moment from 'moment';
 
 export const Users = () => {
   const [loaded, setLoaded] = useState( false );
   const [users, getUsersFromDb] = useState( [] );
   const [addUserVisible, setAddUserVisible] = useState( false );
+  const [editPopupVisible, setEditPopupVisible] = useState( false );
+  const [userData, setUserData] = useState();
 
   const addUserFormOnOk = () => {
     setAddUserVisible( false );
@@ -21,6 +25,19 @@ export const Users = () => {
 
   const addNewUser = async ( user ) => {
     const answer = await addUser( user );
+    setLoaded( false );
+  };
+
+  const editUserFormOnOk = () => {
+    setEditPopupVisible( false );
+  }
+
+  const editUserFormOnCancel = () => {
+    setEditPopupVisible( false );
+  }
+
+  const editUser = async ( user ) => {
+    const answer = await editUserFunction( user );
     setLoaded( false );
   };
 
@@ -90,7 +107,15 @@ export const Users = () => {
       title: 'Edit',
       key: 'edit',
       dataIndex: 'edit',
-      render: () => <EditTwoTone />,
+      render: ( _, record ) => {
+        return (
+          <EditTwoTone onClick={() => {
+            const newBirthdayValue = moment( record.birthday, "DD.MM.YYYY" );
+            setUserData( { ...record, birthday: newBirthdayValue, } );
+            setEditPopupVisible( true );
+          }} />
+        )
+      },
     },
     {
       title: 'Delete',
@@ -115,6 +140,9 @@ export const Users = () => {
       </div>
       <Table columns={columns} dataSource={prepaireData( users )} onRow={onRow} />
       <AddUser handleOk={addUserFormOnOk} handleCancel={addUserFormOnCancel} isModalVisible={addUserVisible} addNewUser={addNewUser} />
+      {userData && (
+        <EditUser user={userData} handleOk={editUserFormOnOk} handleCancel={editUserFormOnCancel} isModalVisible={editPopupVisible} editUser={editUser} />
+      )}
     </>
   )
 }
