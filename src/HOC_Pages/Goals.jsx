@@ -16,11 +16,11 @@ export const Goals = () => {
   useEffect( () => {
     if ( !loaded ) {
       getGoals().then( ( info ) => {
+        console.log( info );
         getGoalsFromDb( info );
       } );
       setLoaded( true );
     }
-    console.log( goals );
   }, [goals, loaded, setLoaded] );
 
   const onRow = ( record, rowIndex ) => ( {
@@ -94,7 +94,7 @@ export const Goals = () => {
     <>
       <Layout style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'white' }}>
         <CustomButton onClick={showGoalPreview} style={{ width: '130px', height: '40px', marginBottom: '20px', alignSelf: 'flex-end' }} title="Добавить цель" />
-        <Table columns={columns} dataSource={goals} onRow={onRow} />
+        <Table columns={columns} dataSource={goals || []} onRow={onRow} />
       </Layout>
       <GoalView handleOk={handleOk} handleCancel={handleCancel} isModalVisible={goalPopup} />
     </>

@@ -5,6 +5,6 @@ export function CONSTANTS ( mode ) {
     } );
   }
   return ( {
-    BASE_URL: 'https://apptodoback.herokuapp.com/',
+    BASE_URL: 'https://todo-app-back-pise.onrender.com/',
   } );
 };
