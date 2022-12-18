@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Layout, Menu, Avatar, Space, Row, Col } from 'antd';
 import { Users } from './Users.jsx';
 import { Goals } from './Goals.jsx';
+import { Register } from './Register.jsx';
 import { User } from './User.jsx';
 import { v4 as uuidv4 } from 'uuid';
 import { UserOutlined } from '@ant-design/icons';
@@ -20,6 +21,7 @@ import '../styles/style.css';
 
 const { Header, Content, Footer } = Layout;
 export const Navigation = () => {
+  const [isLogined, , setLogined] = useState(true);
   const history = useHistory();
   const location = useLocation();
   console.log( location );
@@ -31,34 +33,60 @@ export const Navigation = () => {
       <Header>
         <div className="logo" />
         <Row>
-          <Col span={22}>
+          <Col span={24}>
             <Menu
               theme="dark"
               mode="horizontal"
               onClick={handleClick}
               selectedKeys={location?.pathname.split( '/' )[1]}
-            >
-              <Menu.Item key="users">Пользователи</Menu.Item>
-              <Menu.Item key="goals">Цели</Menu.Item>
+              items={isLogined ? [
+                {
+                  key: 'users',
+                  label: 'Пользователи',
+                },
+                {
+                  key: 'goals',
+                  label: 'Цели',
+                },
+                {
+                  key: '_current_user',
+                  label: <Avatar size={40} icon={<UserOutlined />} />,
+                  children: [
+                    {
+                      label: 'Пользователь',
+                      key: 'user',
+                    },
+                    {
+                      label: 'Выход',
+                      key: 'register',
+                    }
+                  ]
+                }
+              ] :
+              [
+                {
+                  label: 'Вход',
+                  key: 'register',
+                }
+              ]
+            }
+              >
             </Menu>
-          </Col>
-          <Col span={2}>
-            <NavLink onClick={handleClick} key="user" to={`/user`}><Avatar size={40} icon={<UserOutlined />} /></NavLink>
           </Col>
         </Row>
 
       </Header>
-      <Content style={{ "marginTop": '20px', padding: '0 50px' }}>
+      <div className="content" style={{ padding: '10px'}}>
         <div className="site-layout-content">
           <Switch>
+            <Route path="/register" component={Register} />
             <Route path="/goals" component={Goals} />
             <Route path="/users" component={Users} />
             <Route path="/user" component={User} />
-            <Route path="/" render={() => <Redirect to="/users" />} />
+            <Route exact path="/" render={() => <Redirect to="/users" />} />
           </Switch>
         </div>
-      </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+      </div>
     </Layout>
   )
 

@@ -1,10 +1,17 @@
 @import "~normalize.css";
 #root {
   color:darkcyan;
+  height: 100vh !important;
+  min-height: 100vh;
+}
+
+.content {
+  height: 100%;
 }
 
 .site-layout-content {
-  min-height: 280px;
+  border: 1px solid black;
+  height: 100%;
   padding: 24px;
   background: #fff;
 }
@@ -13,9 +20,88 @@
   width: 120px;
   height: 31px;
   margin: 16px 24px 16px 0;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgb(167, 160, 160);
 }
 .ant-row-rtl #components-layout-demo-top .logo {
   float: right;
   margin: 16px 0 16px 24px;
+}
+
+.login_container {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  border-radius: 40px;
+  padding: 10px;
+  background-color: white;
+  -webkit-box-shadow:0px 0px 7px 2px #808080 ;
+  -moz-box-shadow:0px 0px 7px 2px #808080 ;
+  box-shadow:0px 0px 7px 2px #808080 ;
+}
+.title {
+  font-size: 20px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  align-self: center;
+  margin-top: 10px;
+}
+
+.password {
+  height: 50px;
+  width: 90%;
+  margin-top: 40px;
+  position: relative;
+  border: 1px solid darkcyan;
+  border-radius: 10px;
+  padding: 10px;
+
+}
+.password>.password-label {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  top: -15px;
+  left: 10px;
+  background-color: white;
+}
+
+.password>input {
+  width: 100%;
+  top: 0px;
+  left: 0px;
+}
+
+.login {
+  height: 50px;
+  width: 90%;
+  margin-top: 40px;
+  position: relative;
+  border: 1px solid darkcyan;
+  border-radius: 10px;
+  padding: 10px;
+
+}
+.login>.login-label {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  top: -15px;
+  left: 10px;
+  background-color: white;
+}
+
+.login>input {
+  width: 100%;
+  top: 0px;
+  left: 0px;
+}
+
+.btn_container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
