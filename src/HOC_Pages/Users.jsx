@@ -136,7 +136,7 @@ export const Users = () => {
   return (
     <>
       <div style={{ marginBottom: '10px' }}>
-        <CustomButton title="Добавить" onClick={() => setAddUserVisible( true )} />
+        <CustomButton title="Добавить пользователя" onClick={() => setAddUserVisible( true )} />
       </div>
       <Table columns={columns} dataSource={prepaireData( users )} onRow={onRow} />
       <AddUser handleOk={addUserFormOnOk} handleCancel={addUserFormOnCancel} isModalVisible={addUserVisible} addNewUser={addNewUser} />
