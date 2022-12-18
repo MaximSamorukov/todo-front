@@ -66,3 +66,13 @@ export const getGoals = async () => {
     console.log( err );
   }
 };
+
+export const login = async (data) => {
+  try {
+    const response = await axios.post( `${BASE_URL}login`, data );
+    return response.data;
+  } catch ( err ) {
+    throw new Error(err.message);
+  }
+};
+

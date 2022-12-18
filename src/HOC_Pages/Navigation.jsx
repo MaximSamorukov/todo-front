@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { render } from 'react-dom';
 import { Layout, Menu, Avatar, Space, Row, Col } from 'antd';
 import { Users } from './Users.jsx';
@@ -17,17 +17,23 @@ import {
   useLocation,
   useHistory,
 } from "react-router-dom";
+import { ProfileContext } from '../context';
 import '../styles/style.css';
 
 const { Header, Content, Footer } = Layout;
 export const Navigation = () => {
-  const [isLogined, , setLogined] = useState(true);
+  const { isAdmin, setProfile } = useContext(ProfileContext)
   const history = useHistory();
   const location = useLocation();
-  console.log( location );
+
   const handleClick = ( e ) => {
     history.push( e.key );
   };
+
+  const onExit = () => {
+    setProfile(null);
+  }
+
   return (
     <Layout className="layout">
       <Header>
@@ -39,7 +45,7 @@ export const Navigation = () => {
               mode="horizontal"
               onClick={handleClick}
               selectedKeys={location?.pathname.split( '/' )[1]}
-              items={isLogined ? [
+              items={isAdmin ? [
                 {
                   key: 'users',
                   label: 'Пользователи',
@@ -59,16 +65,11 @@ export const Navigation = () => {
                     {
                       label: 'Выход',
                       key: 'register',
+                      onClick: onExit,
                     }
                   ]
                 }
-              ] :
-              [
-                {
-                  label: 'Вход',
-                  key: 'register',
-                }
-              ]
+              ] : []
             }
               >
             </Menu>
@@ -79,11 +80,20 @@ export const Navigation = () => {
       <div className="content" style={{ padding: '10px'}}>
         <div className="site-layout-content">
           <Switch>
-            <Route path="/register" component={Register} />
-            <Route path="/goals" component={Goals} />
-            <Route path="/users" component={Users} />
-            <Route path="/user" component={User} />
-            <Route exact path="/" render={() => <Redirect to="/users" />} />
+            {isAdmin ? (
+              <>
+                <Route path="/register" component={Register} />
+                <Route path="/goals" component={Goals} />
+                <Route path="/users" component={Users} />
+                <Route path="/user" component={User} />
+                <Route exact path="/" render={() => <Redirect to="/users" />} />
+              </>
+            ) : (
+              <>
+                <Route exact path="/" render={() => <Redirect to="/register" />} />
+                <Route path="/register" component={Register} />
+              </>
+            )}
           </Switch>
         </div>
       </div>
