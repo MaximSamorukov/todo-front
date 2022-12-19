@@ -99,6 +99,14 @@
   left: 0px;
 }
 
+.registration>a {
+  color: darkcyan;
+}
+
+.registration>a:hover {
+  color: darkcyan;
+}
+
 .btn_container {
   margin-top: 40px;
   display: flex;

@@ -4,6 +4,7 @@ import { Layout, Menu, Avatar, Space, Row, Col } from 'antd';
 import { Users } from './Users.jsx';
 import { Goals } from './Goals.jsx';
 import { Register } from './Register.jsx';
+import { Registration } from './Registration.jsx';
 import { User } from './User.jsx';
 import { v4 as uuidv4 } from 'uuid';
 import { UserOutlined } from '@ant-design/icons';
@@ -92,6 +93,7 @@ export const Navigation = () => {
               <>
                 <Route exact path="/" render={() => <Redirect to="/register" />} />
                 <Route path="/register" component={Register} />
+                <Route path="/registration" component={Registration} />
               </>
             )}
           </Switch>
