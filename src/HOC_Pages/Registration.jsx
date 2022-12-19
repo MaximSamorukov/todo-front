@@ -1,14 +1,14 @@
 import React, { useState, useContext, useMemo } from 'react';
 import {Layout, Header, Modal, Button, message } from 'antd';
 import axios from 'axios';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { ProfileContext } from '../context';
 import { login as loginFn } from '../data/http';
 import { EditTwoTone, CloseCircleTwoTone, CheckCircleTwoTone } from '@ant-design/icons';
 import { CustomButton } from '../components/UI_components/button.jsx';
 import { GoalView } from '../components/forms/goal_preview.jsx';
 
-export const Register = () => {
+export const Registration = () => {
   const { profile, setProfile } = useContext(ProfileContext);
   const history = useHistory();
   const [password, setPassword] = useState('');
@@ -27,25 +27,27 @@ export const Register = () => {
     setLogin('');
   }
 
-  const onLogin = (e) => {
+  const onRigister = (e) => {
     const data = { password, login };
-    loginFn(data)
-      .then((data) =>  {
-        setProfile(data.body);
-        history.push('/');
-        deleteInputs();
-      })
-      .catch((error) => {
-        message.error(error.message);
-        deleteInputs();
-      });
+    history.push('/');
+
+    //loginFn(data)
+    //  .then((data) =>  {
+    //    setProfile(data.body);
+    //    history.push('/');
+    //    deleteInputs();
+    //  })
+    //  .catch((error) => {
+    //    message.error(error.message);
+    //    deleteInputs();
+    //  });
   }
   const btnLoginDisabled = password.length === 0 || login.length === 0;
 
   return (
     <Layout style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       <div className='login_container'>
-        <div className='title'>Вход в приложение</div>
+        <div className='title'>Регистрация</div>
         <div className="login">
           <div className="login-label">
             <label htmlFor='login'>Введите логин</label>
@@ -58,11 +60,6 @@ export const Register = () => {
           </div>
           <input name='password' type={'password'} value={password} onChange={onEnterPassword} placeholder="введите пароль"/>
         </div>
-        <div className="registration">
-          <Link to={'/registration'}>
-            <div className='label'>Зарегистрироваться</div>
-          </Link>
-        </div>
         <div className='btn_container'>
           <Button
             disabled={btnLoginDisabled}
@@ -71,9 +68,9 @@ export const Register = () => {
             color='blue'
             size='large'
             shape='round'
-            onClick={onLogin}
+            onClick={onRigister}
           >
-            Вход
+            Зарегистрироваться
           </Button>
         </div>
       </div>
