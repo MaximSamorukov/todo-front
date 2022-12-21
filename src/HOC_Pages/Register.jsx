@@ -1,7 +1,7 @@
 import React, { useState, useContext, useMemo } from 'react';
 import {Layout, Header, Modal, Button, message } from 'antd';
 import axios from 'axios';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { ProfileContext } from '../context';
 import { login as loginFn } from '../data/http';
 import { EditTwoTone, CloseCircleTwoTone, CheckCircleTwoTone } from '@ant-design/icons';
@@ -10,7 +10,7 @@ import { GoalView } from '../components/forms/goal_preview.jsx';
 
 export const Register = () => {
   const { profile, setProfile } = useContext(ProfileContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [login, setLogin] = useState('');
 
@@ -32,7 +32,7 @@ export const Register = () => {
     loginFn(data)
       .then((data) =>  {
         setProfile(data.body);
-        history.push('/');
+        navigate('/');
         deleteInputs();
       })
       .catch((error) => {
