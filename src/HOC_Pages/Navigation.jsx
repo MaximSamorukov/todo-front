@@ -15,6 +15,7 @@ import {
   NavLink,
   redirect,
   useLocation,
+  Navigate,
   useNavigate
 } from "react-router-dom";
 import { ProfileContext } from '../context';
@@ -79,23 +80,23 @@ export const Navigation = () => {
       </Header>
       <div className="content" style={{ padding: '10px'}}>
         <div className="site-layout-content">
-          <Routes>
+          <>
             {isAdmin ? (
-              <>
-                <Route path="/register" element={<Register />} />
-                <Route path="/goals" element={<Goals />} />
-                <Route path="/users" element={<Users />} />
-                <Route path="/user" element={<User />} />
-                <Route exact path="/" action={() => redirect("/users")} />
-              </>
+              <Routes>
+                <Route path="register" element={<Register />} />
+                <Route path="goals" element={<Goals />} />
+                <Route path="users" element={<Users />} />
+                <Route path="user" element={<User />} />
+                <Route path="*" element={<Navigate to="/users" />} />
+              </Routes>
             ) : (
-              <>
-                <Route exact path="/" action={() => redirect("/register") } />
+              <Routes>
+                <Route path='*' element={ <Navigate to="/register" /> } />
                 <Route path="/register" element={<Register />} />
                 <Route path="/registration" element={<Registration />} />
-              </>
+              </Routes>
             )}
-          </Routes>
+          </>
         </div>
       </div>
     </Layout>

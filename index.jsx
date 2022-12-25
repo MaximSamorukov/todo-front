@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   createBrowserRouter,
+  BrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import { ProfileContext } from './src/context';
@@ -14,15 +15,17 @@ import 'antd/dist/antd.css';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Navigation />
+    path: "/*",
+    element: (
+    <ProfileProvider>
+      <Navigation />
+    </ProfileProvider>
+    ),
   },
 ]);
 
 render(
-  <ProfileProvider>
-    <RouterProvider router={router} />
-  </ProfileProvider>
+  <RouterProvider router={router} />
   , document.querySelector( '#root' )
 );
 
