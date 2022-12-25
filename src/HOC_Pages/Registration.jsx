@@ -1,7 +1,7 @@
 import React, { useState, useContext, useReducer } from 'react';
 import {Layout, Header, Modal, Button, message } from 'antd';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ProfileContext } from '../context';
 import { addUser } from '../data/http';
 import { EditTwoTone, CloseCircleTwoTone, CheckCircleTwoTone } from '@ant-design/icons';
@@ -12,7 +12,7 @@ import { userReducer, initUser } from '../reducer';
 export const Registration = () => {
   const { profile, setProfile } = useContext(ProfileContext);
   const [ user, dispatch] = useReducer(userReducer, initUser);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [login, setLogin] = useState('');
 
@@ -38,7 +38,7 @@ export const Registration = () => {
     addUser(user)
       .then((data) =>  {
         //setProfile(data.body);
-        history.push('/');
+        navigate('/');
         deleteInputs();
       })
       .catch((error) => {

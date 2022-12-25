@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  HashRouter as Router,
-  Switch,
-  Route,
+  createBrowserRouter,
+  BrowserRouter,
+  RouterProvider,
 } from "react-router-dom";
 import { ProfileContext } from './src/context';
 import { render } from 'react-dom';
@@ -13,20 +13,19 @@ import './src/styles/style.css';
 import './src/styles/scss.scss';
 import 'antd/dist/antd.css';
 
-const App = () => {
-
-  return (
-  <Switch>
-    <Route path='/' component={Navigation} />
-  </Switch>
-)}
+const router = createBrowserRouter([
+  {
+    path: "/*",
+    element: (
+    <ProfileProvider>
+      <Navigation />
+    </ProfileProvider>
+    ),
+  },
+]);
 
 render(
-  <ProfileProvider>
-    <Router>
-      <App />
-    </Router>
-  </ProfileProvider>
+  <RouterProvider router={router} />
   , document.querySelector( '#root' )
 );
 

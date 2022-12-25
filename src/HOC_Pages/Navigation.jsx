@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { render } from 'react-dom';
 import { Layout, Menu, Avatar, Space, Row, Col } from 'antd';
 import { Users } from './Users.jsx';
 import { Goals } from './Goals.jsx';
@@ -11,24 +10,25 @@ import { UserOutlined } from '@ant-design/icons';
 import { CONSTANTS } from '../data/constants';
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
   NavLink,
-  Redirect,
+  redirect,
   useLocation,
-  useHistory,
+  Navigate,
+  useNavigate
 } from "react-router-dom";
 import { ProfileContext } from '../context';
 import '../styles/style.css';
 
 const { Header, Content, Footer } = Layout;
 export const Navigation = () => {
+  const navigate = useNavigate();
   const { isAdmin, setProfile } = useContext(ProfileContext)
-  const history = useHistory();
   const location = useLocation();
 
   const handleClick = ( e ) => {
-    history.push( e.key );
+    navigate(`/${e.key}`);
   };
 
   const onExit = () => {
@@ -80,23 +80,23 @@ export const Navigation = () => {
       </Header>
       <div className="content" style={{ padding: '10px'}}>
         <div className="site-layout-content">
-          <Switch>
+          <>
             {isAdmin ? (
-              <>
-                <Route path="/register" component={Register} />
-                <Route path="/goals" component={Goals} />
-                <Route path="/users" component={Users} />
-                <Route path="/user" component={User} />
-                <Route exact path="/" render={() => <Redirect to="/users" />} />
-              </>
+              <Routes>
+                <Route path="register" element={<Register />} />
+                <Route path="goals" element={<Goals />} />
+                <Route path="users" element={<Users />} />
+                <Route path="user" element={<User />} />
+                <Route path="*" element={<Navigate to="/users" />} />
+              </Routes>
             ) : (
-              <>
-                <Route exact path="/" render={() => <Redirect to="/register" />} />
-                <Route path="/register" component={Register} />
-                <Route path="/registration" component={Registration} />
-              </>
+              <Routes>
+                <Route path='*' element={ <Navigate to="/register" /> } />
+                <Route path="/register" element={<Register />} />
+                <Route path="/registration" element={<Registration />} />
+              </Routes>
             )}
-          </Switch>
+          </>
         </div>
       </div>
     </Layout>
