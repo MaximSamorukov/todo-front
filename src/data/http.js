@@ -1,3 +1,4 @@
+import { json } from 'react-router-dom';
 import { CONSTANTS } from './constants';
 const { BASE_URL } = CONSTANTS(process.env.NODE_ENV);
 const axios = require( 'axios' );
@@ -20,10 +21,9 @@ export const getUser = async (id) => {
   }
 };
 
-export const addUser = async ( user ) => {
+export const addUser = ( user ) => {
   const { name, surname, lastname, login, password, role, birthday } = user;
-  try {
-    const users = await axios.post( `${BASE_URL}users/add`, {
+    return axios.post( `${BASE_URL}users/add`, {
       name,
       surname,
       lastname,
@@ -31,11 +31,13 @@ export const addUser = async ( user ) => {
       password,
       role,
       birthday: birthday.toString(),
-    } );
-    return users.data;
-  } catch ( err ) {
-    console.log( err );
-  }
+    } ).
+    then((data) => {
+      return data.data;
+    })
+    .catch((err) => {
+      throw new Error(JSON.stringify(err.response.data));
+    })
 };
 
 export const deleteUser = async ( login ) => {

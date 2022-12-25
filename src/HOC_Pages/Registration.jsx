@@ -32,8 +32,9 @@ export const Registration = () => {
         navigate('/');
         deleteInputs();
       })
-      .catch((error) => {
-        message.error(error.message);
+      .catch((err) => {
+        const {message: m} = JSON.parse(err.message);
+        message.error(m);
         deleteInputs();
       });
   }
