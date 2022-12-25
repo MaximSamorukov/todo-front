@@ -62,11 +62,11 @@ export const Users = () => {
 
   }, [users, loaded, setLoaded] );
   const onRow = ( record, rowIndex ) => ( {
-    onClick: ( event ) => {
+    onDoubleClick: ( event ) => {
       if (record?.id) {
         navigate(`/user/${record?.id}`);
       }
-    }
+    },
   } );
   const prepaireData = ( data ) => {
     const prepairedData = data && data.map( ( item ) => ( {
