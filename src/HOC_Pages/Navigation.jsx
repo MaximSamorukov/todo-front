@@ -61,7 +61,7 @@ export const Navigation = () => {
                   children: [
                     {
                       label: 'Пользователь',
-                      key: 'user',
+                      key: 'user/6',
                     },
                     {
                       label: 'Выход',
@@ -86,7 +86,7 @@ export const Navigation = () => {
                 <Route path="register" element={<Register />} />
                 <Route path="goals" element={<Goals />} />
                 <Route path="users" element={<Users />} />
-                <Route path="user" element={<User />} />
+                <Route path="user/:id" element={<User />} />
                 <Route path="*" element={<Navigate to="/users" />} />
               </Routes>
             ) : (
