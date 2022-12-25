@@ -1,9 +1,19 @@
 import { CONSTANTS } from './constants';
 const { BASE_URL } = CONSTANTS(process.env.NODE_ENV);
 const axios = require( 'axios' );
+
 export const getUsers = async () => {
   try {
     const users = await axios.get( `${BASE_URL}users` );
+    return users.data;
+  } catch ( err ) {
+    console.log( err );
+  }
+};
+
+export const getUser = async (id) => {
+  try {
+    const users = await axios.get( `${BASE_URL}users/${id}` );
     return users.data;
   } catch ( err ) {
     console.log( err );

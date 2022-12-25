@@ -1,15 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import { Table, Tag, Space } from 'antd';
-import { getUsers } from '../data/http';
+import { ProfileContext } from '../context';
+import { getUser } from '../data/http';
+import { createDataUser } from '../data/functions';
 import data from '../data/mockUser.json';
 export const User = () => {
-  // const [users, getUsersFromDb] = useState( [] );
-  // getUsers().then( ( info ) => {
-  //   getUsersFromDb( info );
-  // } );
-  // useEffect( () => {
-  //   console.log( users );
-  // }, [users] );
+  const { id } = useParams();
+  const profile = useContext(ProfileContext);
+   const [user, setUser] = useState([]);
+   useEffect(() => {
+     getUser(id)
+      .then( ( info ) => {
+        setUser(createDataUser(info));
+      })
+      .catch((err) => {
+        console.error(err);
+        setUser([]);
+      })
+   },[]);
+
 
   const columns = [
     {
@@ -23,6 +33,6 @@ export const User = () => {
       key: 'value',
     },
   ];
-  return <Table columns={columns} dataSource={data} />
+  return <Table columns={columns} dataSource={user} />
 }
 

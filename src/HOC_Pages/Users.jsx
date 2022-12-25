@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Tag, Space } from 'antd';
 import { getUsers, addUser, deleteUser, editUserFunction } from '../data/http';
 import { EditTwoTone, CloseCircleOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 import { CustomButton } from '../components/UI_components/button.jsx';
 import { AddUser } from '../components/forms/addUser.jsx';
 import { EditUser } from '../components/forms/editUser.jsx';
@@ -9,6 +10,7 @@ import { EditUser } from '../components/forms/editUser.jsx';
 import moment from 'moment';
 
 export const Users = () => {
+  const navigate = useNavigate();
   const [loaded, setLoaded] = useState( false );
   const [users, getUsersFromDb] = useState( [] );
   const [addUserVisible, setAddUserVisible] = useState( false );
@@ -57,11 +59,13 @@ export const Users = () => {
             console.log( error );
           } )
     }
-    //console.log( users );
+
   }, [users, loaded, setLoaded] );
   const onRow = ( record, rowIndex ) => ( {
     onClick: ( event ) => {
-      //console.log( event, record, rowIndex );
+      if (record?.id) {
+        navigate(`/user/${record?.id}`);
+      }
     }
   } );
   const prepaireData = ( data ) => {
