@@ -24,7 +24,7 @@ import '../styles/style.css';
 const { Header, Content, Footer } = Layout;
 export const Navigation = () => {
   const navigate = useNavigate();
-  const { isAdmin, isUser, setProfile } = useContext(ProfileContext)
+  const { isAdmin, isUser, profile, setProfile } = useContext(ProfileContext)
   const location = useLocation();
 
   const handleClick = ( e ) => {
@@ -61,7 +61,7 @@ export const Navigation = () => {
                   children: [
                     {
                       label: 'Пользователь',
-                      key: 'user/6',
+                      key: `user/${profile.id}`,
                     },
                     {
                       label: 'Выход',
