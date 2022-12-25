@@ -24,7 +24,7 @@ export const EditUser = ( props ) => {
   const onFormLayoutChange = ( { size } ) => {
     setComponentSize( size );
   };
-  console.log( user );
+
   const prepareData = ( fields ) => Object.keys( fields ).map( ( item ) => ( { name: [item], value: fields[item], } ) );
   const prepairedData = prepareData( user );
   return (

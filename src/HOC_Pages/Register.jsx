@@ -15,11 +15,9 @@ export const Register = () => {
   const [login, setLogin] = useState('');
 
   const onEnterPassword = (e) => {
-    console.log(e.target.value);
     setPassword((prev) => e.target.value);
   }
   const onEnterLogin = (e) => {
-    console.log(e.target.value);
     setLogin((prev) => e.target.value);
   }
   const deleteInputs = () => {

@@ -22,12 +22,12 @@ const dataTemplate = [
    }
  ]
 
+
 export function createFio(user) {
    const { name = '_', surname = '_', lastname = '_' } = user;
    return `${surname} ${name} ${lastname}`;
 }
 export function createDataUser(user) {
-   console.log(user);
    const data = dataTemplate.map((i) => {
       if (i.type === 'fio') {
          return {

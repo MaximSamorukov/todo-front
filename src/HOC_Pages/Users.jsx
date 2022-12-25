@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { Table, Tag, Space } from 'antd';
 import { getUsers, addUser, deleteUser, editUserFunction } from '../data/http';
 import { EditTwoTone, CloseCircleOutlined } from '@ant-design/icons';
+import { ProfileContext } from '../context';
 import { useNavigate } from 'react-router-dom';
 import { CustomButton } from '../components/UI_components/button.jsx';
 import { AddUser } from '../components/forms/addUser.jsx';
@@ -11,6 +12,7 @@ import moment from 'moment';
 
 export const Users = () => {
   const navigate = useNavigate();
+  const { isAdmin, isUser, profile: { role } } = useContext(ProfileContext);
   const [loaded, setLoaded] = useState( false );
   const [users, getUsersFromDb] = useState( [] );
   const [addUserVisible, setAddUserVisible] = useState( false );
@@ -63,7 +65,7 @@ export const Users = () => {
   }, [users, loaded, setLoaded] );
   const onRow = ( record, rowIndex ) => ( {
     onDoubleClick: ( event ) => {
-      if (record?.id) {
+      if (record?.id && isAdmin) {
         navigate(`/user/${record?.id}`);
       }
     },
@@ -76,7 +78,19 @@ export const Users = () => {
     } ) )
     return prepairedData;
   }
-  const columns = [
+  const columnsForUser = useMemo(() => [
+    {
+      title: 'Fullname',
+      dataIndex: 'fullname',
+      key: 'fullname',
+    },
+    {
+      title: 'Birthday',
+      dataIndex: 'birthday',
+      key: 'birthday',
+    },
+  ], []);
+  const columnsForAdmin = useMemo(() => [
     {
       title: 'id',
       dataIndex: 'id',
@@ -136,13 +150,23 @@ export const Users = () => {
         );
       },
     },
-  ];
+  ], []);
+  const columns = {
+    admin: columnsForAdmin,
+    user: columnsForUser,
+  }
+
   return (
     <>
-      <div style={{ marginBottom: '10px' }}>
-        <CustomButton title="Добавить пользователя" onClick={() => setAddUserVisible( true )} />
-      </div>
-      <Table columns={columns} dataSource={prepaireData( users )} onRow={onRow} />
+        {
+          isAdmin && (
+            <div style={{ marginBottom: '10px' }}>
+              <CustomButton title="Добавить пользователя" onClick={() => setAddUserVisible( true )} />
+            </div>
+
+          )
+        }
+      <Table columns={columns[role]} dataSource={prepaireData( users )} onRow={onRow} />
       <AddUser handleOk={addUserFormOnOk} handleCancel={addUserFormOnCancel} isModalVisible={addUserVisible} addNewUser={addNewUser} />
       {userData && (
         <EditUser user={userData} handleOk={editUserFormOnOk} handleCancel={editUserFormOnCancel} isModalVisible={editPopupVisible} editUser={editUser} />

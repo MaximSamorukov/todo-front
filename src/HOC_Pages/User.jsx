@@ -12,7 +12,7 @@ export const User = () => {
    useEffect(() => {
      getUser(id)
       .then( ( info ) => {
-        setUser(createDataUser(info));
+        setUser(createDataUser(info, profile.role));
       })
       .catch((err) => {
         console.error(err);

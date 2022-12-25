@@ -24,7 +24,7 @@ import '../styles/style.css';
 const { Header, Content, Footer } = Layout;
 export const Navigation = () => {
   const navigate = useNavigate();
-  const { isAdmin, setProfile } = useContext(ProfileContext)
+  const { isAdmin, isUser, setProfile } = useContext(ProfileContext)
   const location = useLocation();
 
   const handleClick = ( e ) => {
@@ -46,7 +46,7 @@ export const Navigation = () => {
               mode="horizontal"
               onClick={handleClick}
               selectedKeys={location?.pathname.split( '/' )[1]}
-              items={isAdmin ? [
+              items={(isAdmin || isUser) ? [
                 {
                   key: 'users',
                   label: 'Пользователи',
@@ -81,7 +81,7 @@ export const Navigation = () => {
       <div className="content" style={{ padding: '10px'}}>
         <div className="site-layout-content">
           <>
-            {isAdmin ? (
+            {(isAdmin || isUser) ? (
               <Routes>
                 <Route path="register" element={<Register />} />
                 <Route path="goals" element={<Goals />} />

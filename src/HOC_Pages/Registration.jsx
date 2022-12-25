@@ -16,15 +16,6 @@ export const Registration = () => {
   const [password, setPassword] = useState('');
   const [login, setLogin] = useState('');
 
-  const onEnterPassword = (e) => {
-    console.log(e.target.value);
-    setPassword((prev) => e.target.value);
-  }
-  const onEnterLogin = (e) => {
-    console.log(e.target.value);
-    setLogin((prev) => e.target.value);
-  }
-
   const onChangeValue = (v) => {
     const { name, value } = v.target;
     dispatch({ type: name, payload: { [name]: value }});
