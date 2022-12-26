@@ -1,9 +1,9 @@
 import React, { useState, useContext, useReducer } from 'react';
 import {Layout, Header, Modal, Button, message } from 'antd';
-import axios from 'axios';
+import bcrypt from 'bcryptjs';
 import { useNavigate } from 'react-router-dom';
 import { ProfileContext } from '../context';
-import { addUser } from '../data/http';
+import { addUser, getSalt } from '../data/http';
 import { EditTwoTone, CloseCircleTwoTone, CheckCircleTwoTone } from '@ant-design/icons';
 import { CustomButton } from '../components/UI_components/button.jsx';
 import { GoalView } from '../components/forms/goal_preview.jsx';
@@ -26,17 +26,31 @@ export const Registration = () => {
 
   const onRigister = (e) => {
     //history.push('/');
-    addUser(user)
-      .then((data) =>  {
-        //setProfile(data.body);
-        navigate('/');
-        deleteInputs();
+    getSalt()
+      .then((data) => {
+        const salt = data?.body.salt;
+        const password = user.password;
+        bcrypt.hash(password, salt, (error, hashedPsw) => {
+          if(!error) {
+            addUser({
+              ...user,
+              password: hashedPsw,
+              salt,
+            })
+              .then((data) =>  {
+                //setProfile(data.body);
+                navigate('/');
+                deleteInputs();
+              })
+              .catch((err) => {
+                const {message: m} = JSON.parse(err.message);
+                message.error(m);
+                deleteInputs();
+              });
+          }
+        })
       })
-      .catch((err) => {
-        const {message: m} = JSON.parse(err.message);
-        message.error(m);
-        deleteInputs();
-      });
+      .catch((err) => console.log(err));
   }
   const btnLoginDisabled = Object.values(user).filter((value) => value?.length === 0)?.length !== 0;
 

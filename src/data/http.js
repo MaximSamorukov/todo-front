@@ -22,7 +22,7 @@ export const getUser = async (id) => {
 };
 
 export const addUser = ( user ) => {
-  const { name, surname, lastname, login, password, role, birthday } = user;
+  const { name, surname, lastname, login, password, role, birthday, salt } = user;
     return axios.post( `${BASE_URL}users/add`, {
       name,
       surname,
@@ -31,6 +31,7 @@ export const addUser = ( user ) => {
       password,
       role,
       birthday: birthday.toString(),
+      salt
     } ).
     then((data) => {
       return data.data;
@@ -88,3 +89,11 @@ export const login = async (data) => {
   }
 };
 
+export const getSalt = async () => {
+  try {
+    const response = await axios.get( `${BASE_URL}login`);
+    return response.data;
+  } catch ( err ) {
+    throw new Error(err.message);
+  }
+};
