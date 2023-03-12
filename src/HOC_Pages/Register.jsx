@@ -1,6 +1,7 @@
 import React, { useState, useContext, useMemo } from 'react';
 import {Layout, Header, Modal, Button, message } from 'antd';
 import axios from 'axios';
+import CryptoJS from 'crypto-js';
 import { useNavigate, Link } from 'react-router-dom';
 import { ProfileContext } from '../context';
 import { login as loginFn } from '../data/http';
@@ -25,11 +26,11 @@ export const Register = () => {
     setLogin('');
   }
 
-  const onLogin = (e) => {
-    const data = { password, login };
-    loginFn(data)
-      .then((data) =>  {
-        setProfile(data.body);
+  const onLogin = () => {
+    const info = { password, login };
+    loginFn(info)
+      .then(({ data }) =>  {
+        setProfile(data?.body);
         navigate('/');
         deleteInputs();
       })

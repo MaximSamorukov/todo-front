@@ -1,4 +1,6 @@
 import { json } from 'react-router-dom';
+import bcrypt from 'bcryptjs';
+import CryptoJS from 'crypto-js';
 import { CONSTANTS } from './constants';
 const { BASE_URL } = CONSTANTS(process.env.NODE_ENV);
 const axios = require( 'axios' );
@@ -31,7 +33,6 @@ export const addUser = ( user ) => {
       password,
       role,
       birthday: birthday.toString(),
-      salt
     } ).
     then((data) => {
       return data.data;
@@ -73,26 +74,21 @@ export const editUserFunction = async ( user ) => {
 export const getGoals = async () => {
   try {
     const goals = await axios.get( `${BASE_URL}goals` );
-    console.log( goals.data );
     return goals.data;
   } catch ( err ) {
     console.log( err );
   }
 };
 
-export const login = async (data) => {
+export const login = (data) => {
   try {
-    const response = await axios.post( `${BASE_URL}login`, data );
-    return response.data;
-  } catch ( err ) {
-    throw new Error(err.message);
-  }
-};
-
-export const getSalt = async () => {
-  try {
-    const response = await axios.get( `${BASE_URL}login`);
-    return response.data;
+    const { password, login } = data;
+    const secret = CryptoJS.AES.encrypt(password, login).toString();
+    const response = axios.post( `${BASE_URL}login`, {
+      password: secret,
+      login
+    });
+    return response;
   } catch ( err ) {
     throw new Error(err.message);
   }

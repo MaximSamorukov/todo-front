@@ -1,6 +1,7 @@
 import React, { useState, useContext, useReducer } from 'react';
 import {Layout, Header, Modal, Button, message } from 'antd';
 import bcrypt from 'bcryptjs';
+import CryptoJS from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
 import { ProfileContext } from '../context';
 import { addUser, getSalt } from '../data/http';
@@ -26,31 +27,22 @@ export const Registration = () => {
 
   const onRigister = (e) => {
     //history.push('/');
-    getSalt()
-      .then((data) => {
-        const salt = data?.body.salt;
-        const password = user.password;
-        bcrypt.hash(password, salt, (error, hashedPsw) => {
-          if(!error) {
-            addUser({
-              ...user,
-              password: hashedPsw,
-              salt,
-            })
-              .then((data) =>  {
-                //setProfile(data.body);
-                navigate('/');
-                deleteInputs();
-              })
-              .catch((err) => {
-                const {message: m} = JSON.parse(err.message);
-                message.error(m);
-                deleteInputs();
-              });
-          }
-        })
+    const { password, login } = user;
+    const secret = CryptoJS.AES.encrypt(password, login).toString();
+    addUser({
+      ...user,
+      password: secret,
+    })
+      .then((data) =>  {
+        //setProfile(data.body);
+        navigate('/');
+        deleteInputs();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        const {message: m} = JSON.parse(err.message);
+        message.error(m);
+        deleteInputs();
+      });
   }
   const btnLoginDisabled = Object.values(user).filter((value) => value?.length === 0)?.length !== 0;
 

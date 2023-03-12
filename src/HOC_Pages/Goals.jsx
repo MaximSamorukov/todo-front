@@ -16,7 +16,6 @@ export const Goals = () => {
   useEffect( () => {
     if ( !loaded ) {
       getGoals().then( ( info ) => {
-        console.log( info );
         getGoalsFromDb( info );
       } );
       setLoaded( true );
