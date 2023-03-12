@@ -1,5 +1,4 @@
 import { json } from 'react-router-dom';
-import bcrypt from 'bcryptjs';
 import CryptoJS from 'crypto-js';
 import { CONSTANTS } from './constants';
 const { BASE_URL } = CONSTANTS(process.env.NODE_ENV);

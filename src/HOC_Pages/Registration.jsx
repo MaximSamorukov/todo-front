@@ -1,6 +1,5 @@
 import React, { useState, useContext, useReducer } from 'react';
 import {Layout, Header, Modal, Button, message } from 'antd';
-import bcrypt from 'bcryptjs';
 import CryptoJS from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
 import { ProfileContext } from '../context';
